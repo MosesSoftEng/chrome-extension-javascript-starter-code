@@ -6,7 +6,19 @@
  */
 async function sendMessage(message) {
 	const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-	const response = await chrome.tabs.sendMessage(tab.id, message);
+
+	const response = await chrome.tabs.sendMessage(tab.id, {
+		type: "pluginActive",
+		isActive: this.checked,
+	});
+
+	console.log(response);
+}
+
+function saveToChromeStorage(key, value) {
+	chrome.storage.local.set({ key: value }).then(() => {
+		console.log("Value is set");
+	});
 }
 
 /**
@@ -15,16 +27,10 @@ async function sendMessage(message) {
 document.addEventListener("DOMContentLoaded", function () {
 	const checkbox = document.getElementById("plugin-active");
 
-	/** @type {boolean} */
-	const pluginActive = localStorage.getItem("plugin-active") === "true";
+	chrome.storage.local.get(["key"]).then((result) => {
+		console.log("Value currently is " + result.key);
 
-	// Set the initial checkbox state
-	checkbox.checked = pluginActive;
-
-	// Send the initial state to the content script
-	sendMessage({
-		type: "pluginActive",
-		isActive: pluginActive,
+		checkbox.checked = result.key;
 	});
 
 	/**
@@ -32,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	 */
 	checkbox.addEventListener("change", function () {
 		// Save plugin active state
-		localStorage.setItem("plugin-active", this.checked);
+		saveToChromeStorage("isPluginActive", this.checked);
 
 		// Send the updated state to the content script
 		sendMessage({
