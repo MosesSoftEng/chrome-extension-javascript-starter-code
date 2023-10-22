@@ -1,0 +1,9 @@
+.xl\:max-w-3xl {
+	max-width: 100% !important;
+}
+
+@media (min-width: 768px) {
+	.md\:max-w-3xl {
+		max-width: 100% !important;
+	}
+}
