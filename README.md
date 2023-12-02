@@ -39,4 +39,9 @@
 
 # References.
 1. [Inject scripts into the active tab](https://developer.chrome.com/docs/extensions/mv3/getstarted/tut-focus-mode/)
-2. 
+2. [https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/tutorial.focus-mode/manifest.json](https://github.com/GoogleChrome/chrome-extensions-samples/blob/main/functional-samples/tutorial.focus-mode/manifest.json)
+
+
+# TODO
+1 [] Show extenion on chat gpt site only.
+2. [] Save extension active state.
